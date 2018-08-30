@@ -42,10 +42,15 @@ namespace Horoscopy.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc(Routes.Configure);
+            //app.UseMvc(Routes.Configure);
+            app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-                c.SwaggerEndpoint("/swagger/vNever/swagger.json", "Horoscopy API"));
+            {
+                c.SwaggerEndpoint("/swagger/vNever/swagger.json", "Horoscopy API");
+                c.RoutePrefix = string.Empty;
+            });
+
         }
     }
 }

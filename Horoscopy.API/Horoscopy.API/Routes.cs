@@ -12,7 +12,7 @@ namespace Horoscopy.API
     {
         public static void Configure(IRouteBuilder routes)
         {
-            routes.MapRoute(name:"default", template:"swagger");
+            routes.MapRoute("default", "{controller=Default}/{action=Index}");
         }
     }
 }
