@@ -6,7 +6,7 @@
     {
         public static string GetSign(DateTime dob)
         {
-            var sign = (dob.Year - 1800) % 12;
+            var sign = dob.Year % 12;
 
             switch (sign)
             {
