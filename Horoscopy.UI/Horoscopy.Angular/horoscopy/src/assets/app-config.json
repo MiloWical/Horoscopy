@@ -1,0 +1,24 @@
+{
+  "configuration": {
+    "services": [
+      {
+        "name": "HoroscopyApi",
+        "url": "http://localhost:53399",
+        "routes": [
+          {
+            "name": "ChineseZodiac",
+            "route": "/api/Zodiac/Chinese"
+          },
+          {
+            "name": "WesternZodiac",
+            "route": "/api/Zodiac/Western"
+          },
+          {
+            "name": "WesternHoroscope",
+            "route": "/api/Horoscope/Western"
+          }
+        ]
+      }
+    ]  
+  }
+}

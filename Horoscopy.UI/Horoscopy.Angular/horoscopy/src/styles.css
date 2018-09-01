@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+p.component {
+  border-style: solid;
+  border-color: green;
+  border-width: 3px;
+  padding: 3px;
+}
+
+span.label {
+  font-weight: bold;
+  color: blueviolet;
+  text-decoration: underline;
+}

@@ -8,15 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace Horoscopy.API.Controllers
 {
     using Lookup.Horoscope;
+    using Microsoft.AspNetCore.Cors;
 
     [Route("api/[controller]")]
     [ApiController]
+    [DisableCors]
     public class HoroscopeController : ControllerBase
     {
-        [HttpPost("Horoscope")]
+        [HttpPost("Western")]
         public string GetHoroscope([FromBody] DateTime dob)
         {
-            return HoroscopeLookup.GetHoroscope(dob);
+            return $"\"{HoroscopeLookup.GetHoroscope(dob)}\"";
         }
     }
 }

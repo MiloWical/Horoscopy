@@ -1,0 +1,1 @@
+<input type="date" name="birthdate" [ngModel]="birthdate | date:'yyyy-MM-dd'" (ngModelChange)="processSelectedDate($event)"/>&nbsp;&nbsp;&nbsp;<button id="submit" (click)="callHoroscopyService()" [disabled]="!dateSelected">Let's go!</button>

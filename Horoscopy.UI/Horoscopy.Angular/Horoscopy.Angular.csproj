@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="horoscopy\node_modules\**" />
+    <Compile Remove="horoscopy\src\birthdate\**" />
+    <EmbeddedResource Remove="horoscopy\node_modules\**" />
+    <EmbeddedResource Remove="horoscopy\src\birthdate\**" />
+    <None Remove="horoscopy\node_modules\**" />
+    <None Remove="horoscopy\src\birthdate\**" />
+  </ItemGroup>
+
+</Project>
