@@ -12,7 +12,7 @@ namespace Horoscopy.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [DisableCors]
+    //[DisableCors]
     public class ZodiacController : ControllerBase
     {
         [HttpPost("Chinese")]

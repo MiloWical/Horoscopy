@@ -10,7 +10,7 @@ ENV PATH /_src/app/node_modules/.bin:$PATH
 COPY ./package.json /_src/app/package.json
 
 RUN npm install
-RUN npm install -g @angular/cli@6.1.5 
+RUN npm install -g @angular/cli@6.1.5
 
 COPY . /_src/app
 
@@ -27,6 +27,16 @@ COPY --from=Compiletime /_src/app/dist/out /usr/share/nginx/html
 
 COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
 
+ENV CONFIG_FILE "/usr/share/nginx/html/assets/app-config.json"
+
+# Set the SERVICE_CONFIGURATION at runtime to pass a custom config.
+# The configuration must have the quote symbols escaped
+# (NOTE: This has the highest priority.)
+
+COPY ./config/startup.sh /
+
 EXPOSE 80/tcp
+
+CMD ["/bin/sh", "startup.sh"]
 
 ####### END RUNTIME CONTAINER DEFINITION #######
