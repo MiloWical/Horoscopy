@@ -3,7 +3,7 @@
     "services": [
       {
         "name": "HoroscopyApi",
-        "url": "http://localhost:8001",
+        "url": "",
         "routes": [
           {
             "name": "ChineseZodiac",
