@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ConfigurationService {
 
-  private filename = '../assets/app-config.json';
+  private filename = 'assets/app-config.json';
   private configuration: IConfiguration;
 
   constructor(private httpClient: HttpClient) {
