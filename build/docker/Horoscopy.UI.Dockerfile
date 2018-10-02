@@ -17,21 +17,27 @@ COPY . /_src/app
 #The extra "--" in this command passes the parameter to the underlying 'ng build' command as an argument.
 RUN npm run build -- --output-path=./dist/out
 
+RUN apt-get update && \
+    apt-get -y install xml2 && \
+    html2 < /_src/app/dist/out/index.html | sed 's!/html/head/base/@href=/.*!/html/head/base/@href={{URL_BASE_PREFIX}}!' | 2html > /_src/app/dist/out/index.html
+
 ####### END COMPILETIME CONTAINER DEFINITION #######
 
 ####### BEGIN RUNTIME CONTAINER DEFINITION #######
 
 FROM nginx:1.15.2-alpine AS Runtime
 
-COPY --from=Compiletime /_src/app/dist/out /usr/share/nginx/html
-
-COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
-
 ENV CONFIG_FILE "/usr/share/nginx/html/assets/app-config.json"
+
+ENV URL_BASE_PREFIX "/"
 
 # Set the SERVICE_CONFIGURATION at runtime to pass a custom config.
 # The configuration must have the quote symbols escaped
 # (NOTE: This has the highest priority.)
+
+COPY --from=Compiletime /_src/app/dist/out /usr/share/nginx/html
+
+COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY ./config/startup.sh /
 

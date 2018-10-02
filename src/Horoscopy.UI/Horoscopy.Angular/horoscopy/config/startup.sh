@@ -10,4 +10,9 @@ echo ""
 echo "Service configuration:"
 cat ${CONFIG_FILE}
 
+cat /usr/share/nginx/html/index.html | sed 's!{{URL_BASE_PREFIX}}!'$URL_BASE_PREFIX'!' > /usr/share/nginx/html/index.html
+
+echo ""
+echo "URL Base Prefix: "$URL_BASE_PREFIX
+
 nginx -g "daemon off;"
