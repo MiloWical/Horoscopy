@@ -1,0 +1,87 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: horoscopy-api
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: horoscopy-api
+    spec:
+      containers:
+      - name: horoscopy-api
+        image: miloregistry.azurecr.io/horoscopy-api:beta
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+      imagePullSecrets:
+        - name: acr-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: horoscopy-api
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: horoscopy-api
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: horoscopy-ui
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        
+        app: horoscopy-ui
+    spec:
+      containers:
+      - name: horoscopy-ui
+        image: miloregistry.azurecr.io/horoscopy-ui:beta
+        # env:
+        #   - name: SERVICE_CONFIGURATION
+        #     value: "{\"configuration\":{\"services\":[{\"name\":\"HoroscopyApi\",\"url\":\"\",\"routes\":[{\"name\":\"ChineseZodiac\",\"route\":\"/api/Zodiac/Chinese\"},{\"name\":\"WesternZodiac\",\"route\":\"/api/Zodiac/Western\"},{\"name\":\"WesternHoroscope\",\"route\":\"/api/Horoscope/Western\"}]}]}}"
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+      imagePullSecrets:
+        - name: acr-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: horoscopy-ui
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 23456
+    targetPort: 80
+  selector:
+    app: horoscopy-ui
