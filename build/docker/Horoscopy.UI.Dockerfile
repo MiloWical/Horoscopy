@@ -2,6 +2,9 @@
 
 FROM node:10.9.0 AS Compiletime
 
+RUN apt-get update && \
+    apt-get -y install xml2
+
 RUN mkdir -p /_src/app
 WORKDIR /_src/app
 
@@ -17,9 +20,7 @@ COPY . /_src/app
 #The extra "--" in this command passes the parameter to the underlying 'ng build' command as an argument.
 RUN npm run build -- --output-path=./dist/out
 
-RUN apt-get update && \
-    apt-get -y install xml2 && \
-    html2 < /_src/app/dist/out/index.html | sed 's!/html/head/base/@href=/.*!/html/head/base/@href={{URL_BASE_PREFIX}}!' | 2html > /_src/app/dist/out/index.html
+ RUN html2 < /_src/app/dist/out/index.html | sed 's!/html/head/base/@href=/.*!/html/head/base/@href={{URL_BASE_PREFIX}}!' | 2html > /_src/app/dist/out/index.html
 
 ####### END COMPILETIME CONTAINER DEFINITION #######
 
@@ -27,7 +28,8 @@ RUN apt-get update && \
 
 FROM nginx:1.15.2-alpine AS Runtime
 
-ENV CONFIG_FILE "/usr/share/nginx/html/assets/app-config.json"
+ENV SOURCE_CONFIG_FILE "/usr/share/nginx/html/assets/app-config.json"
+ENV TARGET_CONFIG_FILE = "/usr/share/nginx/html/assets/app-config.json"
 
 ENV URL_BASE_PREFIX "/"
 
