@@ -10,6 +10,7 @@ echo ""
 echo "Service configuration:"
 cat ${CONFIG_FILE}
 
+cp /usr/share/nginx/html/index.html /usr/share/nginx/html/index.original.html 
 cat /usr/share/nginx/html/index.html | sed 's!{{URL_BASE_PREFIX}}!'$URL_BASE_PREFIX'!' > /usr/share/nginx/html/index.html
 
 echo ""
